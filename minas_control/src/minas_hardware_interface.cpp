@@ -40,8 +40,8 @@ namespace minas_control
 
     // set paramete from PANATERM test program
     client->setTrqueForEmergencyStop(100); // 100%
-    client->setOverLoadLevel(50);          // 50%
-    client->setOverSpeedLevel(120);        // r/min
+    client->setOverLoadLevel(100);          // 50%
+    client->setOverSpeedLevel(3000);        // r/min
     client->setMotorWorkingRange(0.1);     // 0.1
 
     client->setInterpolationTimePeriod(4000);     // 4 msec
@@ -65,9 +65,9 @@ namespace minas_control
 	output.target_position = 0;
 	output.position_offset = current_position;
       }
-    output.max_motor_speed = 120;  // rad/min
-    output.target_torque = 500;    // 0% (unit 0.1%)
-    output.max_torque    = 500;    // 50% (unit 0.1%)
+    output.max_motor_speed = 3000;  // r/min
+    output.target_torque = 0;    // 0% (unit 0.1%)
+    output.max_torque    = 1000;    // 100% (unit 0.1%)
     output.controlword   = 0x001f; // move to operation enabled + new-set-point (bit4) + change set immediately (bit5)
 
     // change to cyclic synchronous position mode

@@ -7,7 +7,7 @@
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
   <arg name="simulation" default="false" />
-  <arg unless="$(arg simulation)" name="control_args" value="-i eth4" />
+  <arg unless="$(arg simulation)" name="control_args" value="-i eth0" />
   <arg     if="$(arg simulation)" name="control_args" value="--loopback" />
 
   <!-- Load hardware interface -->
