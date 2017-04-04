@@ -70,7 +70,7 @@
     <parent link="link_j1"/>
     <child link="link_j2"/>
     <origin xyz="${J1X_J2X-BASE_J1X} ${J1Y_J2Y-BASE_J1Y} ${J1Z_J2Z-BASE_J1Z}" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
+    <axis xyz="-1 0 0"/>
     <dynamics damping="0.7"/>
     <limit upper="2.18" lower="-2.18" effort="10" velocity="1" />
   </joint>
