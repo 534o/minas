@@ -65,7 +65,8 @@ int main(int argc, char *argv[])
     }
   }
   /* start slaveinfo */
-  ethercat::EtherCatManager manager(ifname);
+  minas_control::MinasEtherCatManager manager(ifname);
+  manager.init();
   std::vector<minas_control::MinasClient *> clients;
   for (int i = 0; i < manager.getNumClinets(); i++ )
     {

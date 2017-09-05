@@ -33,6 +33,15 @@ class EtherCatManager;
 namespace minas_control
 {
 
+class MinasEtherCatManager : public ethercat::EtherCatManager
+{
+public:
+  MinasEtherCatManager(const std::string& ifname) : ethercat::EtherCatManager(ifname) {};
+
+private:
+  bool initSoem(const std::string& ifname);
+};
+
 /**
  * \brief This class provides a client for the EtherCAT manager object that
  *        can translate robot input/output messages and translate them to
@@ -86,7 +95,7 @@ public:
    * @param[in] slave_no The slave number of the gripper on the EtherCAT network
    *                     (>= 1)
    */
-  MinasClient(ethercat::EtherCatManager& manager, int slave_no);
+  MinasClient(minas_control::MinasEtherCatManager& manager, int slave_no);
 
   /**
    * \brief Write the given set of control flags to the memory of the controller
@@ -195,7 +204,7 @@ private:
    */
   PDS_STATUS getPDSControl(const MinasInput input) const;
 
-  ethercat::EtherCatManager& manager_;
+  minas_control::MinasEtherCatManager& manager_;
   const int slave_no_;
 };
 

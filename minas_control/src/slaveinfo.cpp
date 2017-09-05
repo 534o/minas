@@ -9,7 +9,7 @@
  */
 
 #include <stdio.h>
-#include <ethercat_manager/ethercat_manager.h>
+#include <minas_control/minas_client.h>
 #include <ethercattype.h>
 #include <nicdrv.h>
 #include <ethercatbase.h>
@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
     {      
       /* start slaveinfo */
       std::string ifname(argv[1]);
-      ethercat::EtherCatManager manager(ifname);
+      minas_control::MinasEtherCatManager manager(ifname);
+      manager.init();
     }
   else
     {

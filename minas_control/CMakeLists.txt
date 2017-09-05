@@ -34,7 +34,7 @@ add_executable(reset src/reset.cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(main ${catkin_LIBRARIES} minas_client)
-target_link_libraries(slaveinfo ${catkin_LIBRARIES})
+target_link_libraries(slaveinfo ${catkin_LIBRARIES} minas_client)
 target_link_libraries(simple_test ${catkin_LIBRARIES} minas_client)
 target_link_libraries(reset ${catkin_LIBRARIES} minas_client)
 

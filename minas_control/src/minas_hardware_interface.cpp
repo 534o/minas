@@ -29,7 +29,7 @@ namespace minas_control
 #define PULSE_PER_REVOLUTE ( (1048576 / (2 * M_PI) ) * 101 ) // 20 bit / 101 reduction
   //#define PULSE_PER_REVOLUTE ( ( 131072 / (2 * M_PI) ) * 101 )// 17 bit / 101 reduction
 
-  EtherCATJointControlInterface::EtherCATJointControlInterface(ethercat::EtherCatManager* manager, int slave_no, hardware_interface::JointStateInterface& jnt_stat, hardware_interface::PositionJointInterface& jnt_cmd, int torque_for_emergency_stop, int over_load_level, int over_speed_level, double motor_working_range, int max_motor_speed, int max_torque) : JointControlInterface(slave_no, jnt_stat, jnt_cmd)
+EtherCATJointControlInterface::EtherCATJointControlInterface(minas_control::MinasEtherCatManager* manager, int slave_no, hardware_interface::JointStateInterface& jnt_stat, hardware_interface::PositionJointInterface& jnt_cmd, int torque_for_emergency_stop, int over_load_level, int over_speed_level, double motor_working_range, int max_motor_speed, int max_torque) : JointControlInterface(slave_no, jnt_stat, jnt_cmd)
   {
     ROS_INFO("Initialize EtherCATJoint (%d)", slave_no);
     // EtherCAT
@@ -189,7 +189,8 @@ namespace minas_control
       }
     } else {
     
-      manager = new ethercat::EtherCatManager(ifname);
+      manager = new minas_control::MinasEtherCatManager(ifname);
+      manager->init();
 
       n_dof_ = manager->getNumClinets();
       if ( n_dof_ != 6 ) {

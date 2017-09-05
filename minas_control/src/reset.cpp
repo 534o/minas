@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
     {      
       /* start slaveinfo */
       std::string ifname(argv[1]);
-      ethercat::EtherCatManager manager(ifname);
+      minas_control::MinasEtherCatManager manager(ifname);
+      manager.init();
       minas_control::MinasClient client(manager, 1);
 
       // clear error
