@@ -66,7 +66,7 @@ class EtherCatManager
 {
 public:
   /**
-   * \brief Constructs and initializes the ethercat slaves on a given network interface.
+   * \brief Constructs ethercat slaves on a given network interface.
    *
    * @param[in] ifname the name of the network interface that the ethercat chain 
    *                   is connected to (i.e. "eth0")
@@ -77,6 +77,14 @@ public:
   EtherCatManager(const std::string& ifname);
   
   ~EtherCatManager();
+
+  /**
+   * \brief initializes the ethercat slaves on a given network interface.
+   *
+   * Constructor can throw EtherCatError exception if SOEM could not be
+   * initialized.
+   */
+  void init();
 
   /**
    * \brief writes 'value' to the 'channel-th' output-register of the given 'slave'
@@ -132,12 +140,18 @@ public:
    */
   int getNumClinets() const;
 
-private:
-  bool initSoem(const std::string& ifname);
+  /**
+   * \brief get the slave_id for nth clients
+   */
+  int getSlaveId(int i) const;
+
+protected:
+  virtual bool initSoem(const std::string& ifname) = 0;
 
   const std::string ifname_;
   uint8_t iomap_[4096];
   int num_clients_;
+  std::vector<int> slave_ids_;
   boost::thread cycle_thread_;
   mutable boost::mutex iomap_mutex_;
   bool stop_flag_;
