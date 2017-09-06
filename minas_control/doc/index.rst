@@ -64,6 +64,8 @@ Running ``rostopic`` command will show a list of input and output topics of this
 
   $ rostopic list
   /diagnostics
+  /gx_driver_controller/input0
+  /gx_driver_controller/output1
   /joint_states
   /position_trajectory_controller/command
   /position_trajectory_controller/follow_joint_trajectory/cancel
@@ -93,6 +95,40 @@ rostopic named ``/joint_states`` will show the status of each joint including
   float64[] position
   float64[] velocity
   float64[] effort
+
+rostopic named ``/gx_driver_controller/input0`` will show the input of DigitalIO data, with ``gx_control/DigitalIO.msg` message type
+
+.. code-block:: bash
+
+  $ rosmsg show gx_control/DigitalIO.msg
+  std_msgs/Header header
+    uint32 seq
+    time stamp
+    string frame_id
+  bool[] data
+
+On default, the length of the data list is 16. So to read the Digital input data, try
+
+.. code-block:: bash
+
+  $ rostopic echo /gx_driver_controller/input0
+  header:
+    seq: 1641
+    stamp:
+      secs: 1504689845
+      nsecs:   7327723
+    frame_id: ''
+  data: [False, True, False, True, False, False, False, False, False, False, False, False, False, False, False, False]
+
+rostopic named ``/gx_driver_controller/output0`` will subscribe the data and write the output of DigitalIO data. Tthi topic uses ``gx_control/DigitalIO.msg` message type too.
+
+To change the output of the Digital IO port, try following ``rostopic pub`` command.
+
+.. code-block:: bash
+
+  $ rostopic pub -1 /gx_driver_controller/output1 gx_control/DigitalIO \
+     '{data : [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1]}'
+
 
 To send commands to the controller, you can use ``/position_trajectory_controller/follow_joint_trajectory/goal`` of type ``control_msgs/JointTrajectoryActionGoal``.
 
