@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #ifndef GX_CLIENT_H
-#define GXS_CLIENT_H
+#define GX_CLIENT_H
 
 #include <soem/osal.h>
 #include <ethercat_manager/ethercat_manager.h>
@@ -32,6 +32,8 @@ class EtherCatManager;
 
 namespace gx_control
 {
+
+#define IF_OMRON_GX(_ec_slave) (((int)_ec_slave.eep_man == 0x0083) && ((((int)ec_slave[cnt].eep_id) >= 0x0f) && (((int)ec_slave[cnt].eep_id) <= 0x52)))
 
 class GxEtherCatManager : public ethercat::EtherCatManager
 {
@@ -48,6 +50,7 @@ public:
 private:
   bool initSoem(const std::string& ifname);
 
+protected:
   std::vector<uint8_t> rx_pdo_no_;
   std::vector<uint8_t> tx_pdo_no_;
 };

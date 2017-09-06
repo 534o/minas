@@ -33,8 +33,6 @@
 namespace gx_control
 {
 
-#define IF_OMRON_GX(_ec_slave) (((int)_ec_slave.eep_man == 0x0083) && ((((int)ec_slave[cnt].eep_id) >= 0x0f) && (((int)ec_slave[cnt].eep_id) <= 0x52)))
-
 uint32_t GxEtherCatManager::readInput(int slave_no) const
 {
   union {
@@ -64,7 +62,6 @@ uint32_t GxEtherCatManager::readOutput(int slave_no) const
   // ret.ret8[3] = EtherCatManager::readInput(slave_no, (uint8_t)3);
   return ret.ret32;
 }
-
 
 uint32_t GxEtherCatManager::writeOutput(int slave_no, uint32_t value)
 {
@@ -300,7 +297,7 @@ void GxClient::writeOutputs(const GxOutput& output)
   for(int i = 0; i < 16; i++){
     value |= (0x0001 & output.data[i]) << i;
   }
-  manager_.write(slave_no_, 0, value);
+  manager_.writeOutput(slave_no_, value);
 }
 
 GxInput GxClient::readInputs() const
