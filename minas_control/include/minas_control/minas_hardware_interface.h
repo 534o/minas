@@ -26,6 +26,8 @@
 
 // ros_control
 #include <controller_manager/controller_manager.h>
+#include <hardware_interface/internal/hardware_resource_manager.h>
+#include <controller_interface/controller.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
@@ -34,8 +36,22 @@
 #include <ethercat_manager/ethercat_manager.h>
 #include <minas_control/minas_client.h>
 
+// gx
+#include <gx_control/gx_client.h>
+#include <gx_control/gx_driver_controller.h>
+
 namespace minas_control
 {
+
+class MinasGxEtherCatManager : public minas_control::MinasEtherCatManager, public gx_control::GxEtherCatManager
+{
+public:
+  MinasGxEtherCatManager(const std::string& ifname) : minas_control::MinasEtherCatManager(ifname), gx_control::GxEtherCatManager(ifname)  {};
+
+private:
+  bool initSoem(const std::string& ifname);
+};
+
 
 struct JointData
 {
@@ -107,15 +123,18 @@ private:
 
   hardware_interface::JointStateInterface joint_state_interface;
   hardware_interface::PositionJointInterface joint_position_interface;
+  hardware_interface::GxDriverInterface gx_driver_interface;
 
   // Kinematic properties
   unsigned int n_dof_;
+  // # of digital io
+  unsigned int n_dio_;
 
   typedef std::vector<JointControlInterface*> JointControlContainer;
   JointControlContainer controls;
 
   // Ethercat Manager
-  minas_control::MinasEtherCatManager* manager;
+  minas_control::MinasGxEtherCatManager* manager;
 
 public:
   /**
