@@ -33,6 +33,8 @@ class EtherCatManager;
 namespace minas_control
 {
 
+#define IF_MINAS(_ec_slave) (((int)_ec_slave.eep_man == 0x066f) & ((((0xf0000000&(int)ec_slave[cnt].eep_id)>>28) == 0x5) || (((0xf0000000&(int)ec_slave[cnt].eep_id)>>28) == 0xD)))
+
 class MinasEtherCatManager : public ethercat::EtherCatManager
 {
 public:
