@@ -1,0 +1,11 @@
+<library path="lib/libgx_driver_controller">
+  <class name="gx_control/GxDriverController"
+         type="gx_control::GxDriverController"
+         base_class_type="controller_interface::ControllerBase">
+  <description>
+    This controller publishes the readings of all available GX
+    drivers as std_msgs/bool message. The controller expects a
+    GxDriverInterface type of hardware interface.
+  </description>
+  </class>
+</library>
