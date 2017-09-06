@@ -38,3 +38,10 @@
     state_publish_rate:  50 # Defaults to 50
     action_monitor_rate: 20 # Defaults to 20
     #hold_trajectory_duration: 0 # Defaults to 0.5
+
+  # Publish/Subscribe DIO Driver -----------------------------------
+  gx_driver_controller:
+    type: gx_control/GxDriverController
+    prefix: gx_driver_controller
+    publish_rate: 10
+

@@ -74,6 +74,7 @@ main/joint6/max_torque                : 1000
         args="--shutdown-timeout 0.1
 	      joint_state_controller
 	      position_trajectory_controller
+              gx_driver_controller
               " />
   <!-- position_trajectory_controller -->
 
