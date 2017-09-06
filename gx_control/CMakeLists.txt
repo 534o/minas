@@ -1,13 +1,25 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(gx_control)
 
-find_package(catkin REQUIRED COMPONENTS ethercat_manager soem)
+find_package(catkin REQUIRED COMPONENTS ethercat_manager soem message_generation)
+
+########################
+## message generation ##
+########################
+
+add_message_files(
+  DIRECTORY msg
+  FILES DigitalIO.msg)
+
+generate_messages(DEPENDENCIES std_msgs)
 
 ###################################
 ## catkin specific configuration ##
 ###################################
 catkin_package(
   INCLUDE_DIRS include
+  LIBRARIES gx_client
+  CATKIN_DEPENDS message_runtime
 )
 
 ###########
@@ -26,11 +38,15 @@ include_directories(
 ## Declare a C++ library
 add_library(gx_client src/gx_client.cpp)
 
+add_library(gx_driver_controller src/gx_driver_controller.cpp)
+add_dependencies(gx_driver_controller ${PROJECT_NAME}_generate_messages_cpp)
+
 ## Declare a C++ executable
 add_executable(slaveinfo src/slaveinfo.cpp)
 add_executable(simple_test src/simple_test.cpp)
 
 ## Specify libraries to link a library or executable target against
+target_link_libraries(gx_driver_controller ${catkin_LIBRARIES} gx_client)
 target_link_libraries(slaveinfo ${catkin_LIBRARIES} gx_client)
 target_link_libraries(simple_test ${catkin_LIBRARIES} gx_client)
 
@@ -50,7 +66,7 @@ set_sudo_binary(simple_test)
 #############
 
 ## Mark executables and/or libraries for installation
-install(TARGETS slaveinfo simple_test gx_client
+install(TARGETS slaveinfo simple_test gx_client gx_driver_controller
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -62,6 +78,9 @@ set_property(TARGET gx_client PROPERTY INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+
+install(FILES gx_control_plugin.xml
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
 #############
 ## Testing ##
