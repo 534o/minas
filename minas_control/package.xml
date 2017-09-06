@@ -18,6 +18,7 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>joint_limits_interface</build_depend>
   <build_depend>trajectory_msgs</build_depend>
+  <build_depend>gx_control</build_depend>
 
   <run_depend>ethercat_manager</run_depend>
   <run_depend>controller_manager</run_depend>
@@ -27,6 +28,7 @@
   <run_depend>sensor_msgs</run_depend>
   <run_depend>joint_limits_interface</run_depend>
   <run_depend>trajectory_msgs</run_depend>
+  <run_depend>gx_control</run_depend>
 
   <export>
   </export>
